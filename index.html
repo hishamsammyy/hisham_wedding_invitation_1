@@ -164,6 +164,21 @@ body.locked{overflow:hidden;height:100vh;height:calc(var(--vh,1vh) * 100);touch-
 .verse-ref{display:block;margin-top:6px;font-family:"Cinzel",serif;font-size:12px;letter-spacing:2px;color:var(--gold);opacity:.85}
 .closing-sign{margin-top:6px}
 
+/* ===== الصورة في الآخر ===== */
+.portrait{margin:48px auto 0;max-width:330px;opacity:0;transform:translateY(40px) scale(.92);filter:blur(12px);
+  transition:opacity 1.6s ease, transform 1.6s cubic-bezier(.2,.7,.2,1), filter 1.6s ease}
+.portrait.in{opacity:1;transform:none;filter:none}
+.portrait .frame{position:relative;padding:7px;border-radius:200px 200px 22px 22px;overflow:hidden;
+  background:linear-gradient(160deg,#f6e3b4,#b8914a 35%,#f3dca6 55%,#9c7638 80%,#e9c98b);
+  box-shadow:0 0 0 1px rgba(255,220,160,.4),0 0 45px rgba(255,70,105,.45),0 25px 60px rgba(0,0,0,.55)}
+.portrait img{display:block;width:100%;height:auto;border-radius:194px 194px 16px 16px;background:#1a0307}
+.portrait .frame::after{content:"";position:absolute;top:0;right:0;bottom:0;left:0;pointer-events:none;
+  background:linear-gradient(115deg,transparent 38%,rgba(255,255,255,.5) 50%,transparent 62%);background-size:260% 100%;background-position:160% 0}
+.portrait.in .frame::after{animation:sheen 2.4s ease 1.3s forwards}
+@keyframes sheen{to{background-position:-60% 0}}
+.portrait figcaption{margin-top:16px;font-family:"Great Vibes",cursive;font-size:34px;color:#fff;text-shadow:0 0 16px rgba(255,90,120,.8)}
+
+
 .orn{margin:34px auto;width:180px;height:14px;color:var(--gold);opacity:.8}
 
 .families{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;font-size:19px;line-height:1.5}
@@ -342,6 +357,11 @@ footer{text-align:center;padding:30px 16px 36px;font-family:"Cinzel",serif;font-
     </div>
 
     <p class="closing reveal split" data-sp="20" id="d-closing"></p><div class="closing-sign"><span class="name write" id="d-sign" style="font-size:44px"></span></div>
+
+    <figure class="portrait reveal">
+      <div class="frame"><img id="d-photo" alt="Hisham & Bassant" decoding="async"></div>
+      <figcaption class="split" data-sp="40" data-d="1200" id="d-photo-cap"></figcaption>
+    </figure>
   </div>
 </section>
 <footer id="footer"></footer>
@@ -381,7 +401,11 @@ var WEDDING = {
   closing: "Your presence will make our joy complete",
   sign: "See you there",
   footer: "Hisham & Bassant ♥ 13 . 11 . 2026",
-  music: ""                   // optional: "music.mp3" next to this file
+  // الأغنية: اسم الملف اللي جنب index.html (لو من غير امتداد هيجرب mp3 / m4a / wav / ogg / aac)
+  music: "invitation-song_0vg97me2",
+  // الصورة اللي في آخر الدعوة (لازم الاسم يبقى بالظبط زي الملف، كابيتال وسمول)
+  photo: "WeddingPortrait.png",
+  photoCaption: "Forever & always ♥"
 };
 /* ========================================================== */
 
@@ -401,6 +425,8 @@ var WEDDING = {
   set("d-time",WEDDING.timeText); set("d-venue",WEDDING.venue); set("d-address",WEDDING.address);
   set("d-closing",WEDDING.closing); set("d-sign",WEDDING.sign); set("footer",WEDDING.footer);
   $("map-btn").href=WEDDING.mapUrl;
+  var ph=$("d-photo"); if(ph){ if(WEDDING.photo){ph.onerror=function(){ph.parentNode.parentNode.style.display="none"};ph.src=WEDDING.photo;} else {ph.parentNode.parentNode.style.display="none"} }
+  set("d-photo-cap",WEDDING.photoCaption||"");
   // ارتفاع الشاشة الحقيقي على الموبايل
   function vh(){document.documentElement.style.setProperty("--vh",(window.innerHeight/100)+"px")}
   vh(); window.addEventListener("resize",vh);
@@ -538,10 +564,22 @@ buildGlitter();renderGlitter();
 let rT;addEventListener("resize",()=>{clearTimeout(rT);rT=setTimeout(()=>{sizeDust();if(!touched)buildGlitter()},200)});
 
 /* ---------------- موسيقى ---------------- */
-let audio=null;
-if(WEDDING.music){audio=new Audio(WEDDING.music);audio.loop=true;$("music").style.display="block";
-  $("music").onclick=()=>{if(audio.paused){audio.play();$("music").classList.add("on")}else{audio.pause();$("music").classList.remove("on")}}}
-function startAudio(){if(audio&&audio.paused&&audio.play)audio.play().then(()=>$("music").classList.add("on")).catch(()=>{})}
+let audio=null, wantPlay=false;
+if(WEDDING.music){
+  audio=document.createElement("audio");audio.loop=true;audio.preload="auto";audio.setAttribute("playsinline","");
+  const m=WEDDING.music, hasExt=/\.[a-z0-9]{2,4}$/i.test(m);
+  const list=hasExt?[m]:[".mp3",".m4a",".wav",".ogg",".aac",".mpeg"].map(x=>m+x);
+  list.forEach(src=>{const so=document.createElement("source");so.src=src;audio.appendChild(so)});
+  document.body.appendChild(audio);
+  $("music").style.display="block";
+  audio.addEventListener("play",()=>$("music").classList.add("on"));
+  audio.addEventListener("pause",()=>$("music").classList.remove("on"));
+  $("music").onclick=e=>{e.stopPropagation();if(audio.paused){wantPlay=true;tryPlay()}else{wantPlay=false;audio.pause()}};
+}
+function tryPlay(){try{const r=audio.play();if(r&&r.catch)r.catch(()=>{})}catch(e){}}
+function startAudio(){if(audio&&audio.paused){wantPlay=true;tryPlay()}}
+// بعض الموبايلات (آيفون) بتسمح بالصوت بس بعد ما الصباع يترفع — نحاول تاني
+["touchend","click"].forEach(ev=>document.addEventListener(ev,()=>{if(audio&&wantPlay&&audio.paused)tryPlay()},{passive:true}));
 
 /* ---------------- ظهور مع السكرول ---------------- */
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target;
