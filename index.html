@@ -151,7 +151,7 @@ body.locked{overflow:hidden;height:100vh;height:calc(var(--vh,1vh) * 100);touch-
 #skip.visible{opacity:1}
 
 /* =================== التفاصيل تحت =================== */
-.details{position:relative;padding:70px 16px 40px;text-align:center;
+.details{position:relative;padding:0 16px;text-align:center;
   background:linear-gradient(180deg,#070102 0%,#1a0307 40%,#2a0509 100%)}
 .details::before{content:"";position:absolute;top:0;left:0;right:0;height:70px;background:linear-gradient(180deg,#070102,transparent)}
 .wrap{max-width:520px;margin:0 auto}
@@ -163,6 +163,11 @@ body.locked{overflow:hidden;height:100vh;height:calc(var(--vh,1vh) * 100);touch-
 .verse{font-style:italic;font-size:19px}
 .verse-ref{display:block;margin-top:6px;font-family:"Cinzel",serif;font-size:12px;letter-spacing:2px;color:var(--gold);opacity:.85}
 .closing-sign{margin-top:6px}
+/* كل جزء صفحة كاملة لوحده */
+.stop{min-height:100vh;min-height:calc(var(--vh,1vh) * 100);display:flex;flex-direction:column;justify-content:center;padding:40px 0}
+.stop > .orn:first-child{margin-top:0}
+figure.stop.portrait{margin:0 auto;align-items:center}
+figure.stop.portrait .frame{max-width:330px;width:100%}
 
 /* ===== الصورة في الآخر ===== */
 .portrait{margin:48px auto 0;max-width:330px;opacity:0;transform:translateY(40px) scale(.92);filter:blur(12px);
@@ -312,13 +317,13 @@ footer{text-align:center;padding:30px 16px 36px;font-family:"Cinzel",serif;font-
 <!-- ============ التفاصيل ============ -->
 <section class="details">
   <div class="wrap">
-    <div class="reveal">
+    <div class="stop"><div class="reveal">
       <div class="bism split" data-sp="25">In the name of God, the Most Gracious, the Most Merciful</div>
       <p class="verse split" data-sp="12">“And among His signs is that He created for you mates from among yourselves, that you may find tranquility in them; and He placed between you affection and mercy.”</p>
       <span class="verse-ref split" data-d="1800">Quran · Ar-Rum 30:21</span>
-    </div>
+    </div></div>
 
-    <svg class="orn reveal line-draw" viewBox="0 0 180 14" fill="none" stroke="currentColor"><path d="M0 7h70M110 7h70"/><path d="M90 1l6 6-6 6-6-6z" fill="currentColor"/><circle cx="76" cy="7" r="2"/><circle cx="104" cy="7" r="2"/></svg>
+    <div class="stop"><svg class="orn reveal line-draw" viewBox="0 0 180 14" fill="none" stroke="currentColor"><path d="M0 7h70M110 7h70"/><path d="M90 1l6 6-6 6-6-6z" fill="currentColor"/><circle cx="76" cy="7" r="2"/><circle cx="104" cy="7" r="2"/></svg>
 
     <div class="families reveal">
       <div><span class="who">The Groom</span><span class="full split" id="d-groom"></span></div>
@@ -326,9 +331,9 @@ footer{text-align:center;padding:30px 16px 36px;font-family:"Cinzel",serif;font-
       <div><span class="who">The Bride</span><span class="full split" id="d-bride"></span></div>
     </div>
 
-    <p class="invite-text reveal split" data-sp="18" id="d-invite"></p>
+    <p class="invite-text reveal split" data-sp="18" id="d-invite"></p></div>
 
-    <div class="date-card reveal">
+    <div class="stop"><div class="date-card reveal">
       <div class="side split" id="d-weekday"></div>
       <div><div class="num split" data-sp="180" id="d-day"></div><div class="mon split" data-d="400" id="d-month"></div></div>
       <div class="side split" data-sp="120" id="d-year"></div>
@@ -342,9 +347,9 @@ footer{text-align:center;padding:30px 16px 36px;font-family:"Cinzel",serif;font-
         <div class="cd"><b id="cd-m">0</b><small>Minutes</small></div>
         <div class="cd"><b id="cd-s">0</b><small>Seconds</small></div>
       </div>
-    </div>
+    </div></div>
 
-    <svg class="orn reveal line-draw" viewBox="0 0 180 14" fill="none" stroke="currentColor"><path d="M0 7h70M110 7h70"/><path d="M90 1l6 6-6 6-6-6z" fill="currentColor"/><circle cx="76" cy="7" r="2"/><circle cx="104" cy="7" r="2"/></svg>
+    <div class="stop"><svg class="orn reveal line-draw" viewBox="0 0 180 14" fill="none" stroke="currentColor"><path d="M0 7h70M110 7h70"/><path d="M90 1l6 6-6 6-6-6z" fill="currentColor"/><circle cx="76" cy="7" r="2"/><circle cx="104" cy="7" r="2"/></svg>
 
     <div class="venue reveal">
       <h3 class="write" id="d-venue"></h3>
@@ -354,11 +359,11 @@ footer{text-align:center;padding:30px 16px 36px;font-family:"Cinzel",serif;font-
         <button class="btn ghost" id="cal-btn">🗓️ Add to Calendar</button>
         <button class="btn ghost" id="share-btn">↗ Share Invitation</button>
       </div>
-    </div>
+    </div></div>
 
-    <p class="closing reveal split" data-sp="20" id="d-closing"></p><div class="closing-sign"><span class="name write" id="d-sign" style="font-size:44px"></span></div>
+    <div class="stop"><p class="closing reveal split" data-sp="20" id="d-closing"></p><div class="closing-sign"><span class="name write" id="d-sign" style="font-size:44px"></span></div></div>
 
-    <figure class="portrait reveal">
+    <figure class="stop portrait reveal">
       <div class="frame"><img id="d-photo" alt="Hisham & Bassant" decoding="async"></div>
       <figcaption class="split" data-sp="40" data-d="1200" id="d-photo-cap"></figcaption>
     </figure>
@@ -459,6 +464,8 @@ const play=el=>{el.classList.add("play");const pen=el.nextElementSibling;if(el.c
 function playHero(){
   const seq=[["h-families",0],["h-groom",900],["h-amp",2500],["h-bride",3000],["h-invite",4700],["h-date",5900],["h-place",6700]];
   seq.forEach(([id,t])=>setTimeout(()=>play($(id)),t));
+  const [lastId,lastT]=seq[seq.length-1];
+  setTimeout(startTour, lastT + estimate($(lastId)) + PAUSE);   // ٣ ثواني بعد ما الكتابة تخلص
 }
 
 /* ---------------- غبار لامع فوق المسرح ---------------- */
@@ -582,12 +589,64 @@ function startAudio(){if(audio&&audio.paused){wantPlay=true;tryPlay()}}
 ["touchend","click"].forEach(ev=>document.addEventListener(ev,()=>{if(audio&&wantPlay&&audio.paused)tryPlay()},{passive:true}));
 
 /* ---------------- ظهور مع السكرول ---------------- */
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target;
-  el.classList.add("in");
-  if(el.matches(".split,.write,.pop,.line-draw"))play(el);
-  el.querySelectorAll(".split,.write,.pop,.line-draw").forEach(play);
-  io.unobserve(el)}),{threshold:.2});
-document.querySelectorAll(".details .reveal, .details .split, .details .write, .details .pop, .closing-sign").forEach(el=>io.observe(el));
+/* ---------------- جولة تلقائية: كل جزء يظهر ويتكتب، وبعد ٣ ثواني ينزل للي بعده ---------------- */
+const PAUSE=3000;                     // المدة بعد ما الأنيميشن يخلص (ملّي ثانية)
+const ANIM=".reveal,.split,.write,.pop,.line-draw";
+function estimate(el){
+  if(el.classList.contains("portrait")) return 4200;
+  if(el.classList.contains("split")){const ch=el.querySelectorAll(".ch");const n=ch.length?+ch[ch.length-1].style.getPropertyValue("--i"):0;
+    return (+el.dataset.d||0)+n*(+el.dataset.sp||35)+900}
+  if(el.classList.contains("write")) return 2000;
+  return 1100;
+}
+function playStop(stop){
+  const els=[stop,...stop.querySelectorAll("*")].filter(e=>e.matches(ANIM));
+  let off=0,end=0;
+  els.forEach(e=>{
+    if(e.classList.contains("reveal")){e.classList.add("in");end=Math.max(end,off+estimate(e))}
+    if(e.matches(".split,.write,.pop,.line-draw")){const t=off;setTimeout(()=>play(e),t);end=Math.max(end,t+estimate(e));off+=300}
+  });
+  return end;
+}
+let auto=true, tourTimer=null, scrollAnim=null;
+function smoothTo(y,dur,done){
+  const y0=scrollY, dy=y-y0, t0=performance.now();
+  cancelAnimationFrame(scrollAnim);
+  if(Math.abs(dy)<2){done&&done();return}
+  (function f(now){const k=Math.min(1,(now-t0)/dur), e=k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;
+    scrollTo(0,y0+dy*e); if(k<1) scrollAnim=requestAnimationFrame(f); else done&&done()})(t0);
+}
+function stopY(el){const r=el.getBoundingClientRect(), h=innerHeight;
+  const y=scrollY+r.top-(r.height<h-40?(h-r.height)/2:24);
+  return Math.max(0,Math.min(y,document.documentElement.scrollHeight-h))}
+const stops=[...document.querySelectorAll(".details .stop")];
+function startTour(){
+  if(!auto||document.body.classList.contains("failsafe")) return;
+  let i=0;
+  (function next(){
+    if(!auto) return;
+    if(i>=stops.length){endTour();return}
+    const st=stops[i++];
+    smoothTo(stopY(st),1800,()=>{ if(!auto) return; const d=playStop(st); tourTimer=setTimeout(next, d+PAUSE) });
+  })();
+}
+function endTour(){auto=false;clearTimeout(tourTimer);cancelAnimationFrame(scrollAnim);startObserver()}
+// لو الضيف سكرول بنفسه، الجولة تقف ويكمل هو براحته
+const free=()=>cleared&&!document.body.classList.contains("locked");
+["wheel","touchmove"].forEach(ev=>addEventListener(ev,()=>{if(auto&&free())endTour()},{passive:true}));
+addEventListener("keydown",e=>{if(auto&&free()&&["ArrowDown","ArrowUp","PageDown","PageUp"," ","Home","End"].includes(e.key))endTour()});
+
+/* لما الضيف يسكرول بنفسه: كل جزء يظهر أول ما يوصله */
+let io=null;
+function startObserver(){
+  if(io) return;
+  io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target;
+    el.classList.add("in");
+    if(el.matches(".split,.write,.pop,.line-draw"))play(el);
+    el.querySelectorAll(".split,.write,.pop,.line-draw").forEach(play);
+    io.unobserve(el)}),{threshold:.2});
+  document.querySelectorAll(".details .reveal, .details .split, .details .write, .details .pop, .details .line-draw, .closing-sign").forEach(el=>io.observe(el));
+}
 
 /* ---------------- العد التنازلي ---------------- */
 function setNum(id,v){const el=$(id),t=String(v).padStart(2,"0");if(el.textContent!==t){el.textContent=t;el.classList.remove("tick");void el.offsetWidth;el.classList.add("tick")}}
