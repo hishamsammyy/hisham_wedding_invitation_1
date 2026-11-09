@@ -65,6 +65,9 @@ body.locked{overflow:hidden;height:100vh;height:calc(var(--vh,1vh) * 100);touch-
 @keyframes sway{0%,100%{transform:rotate(-2deg) translateX(-2%)}50%{transform:rotate(2deg) translateX(2%)}}
 
 /* النصوص فوق المسرح */
+.heading::before{content:"";position:absolute;left:-12%;right:-12%;top:-28px;bottom:-34px;z-index:-1;pointer-events:none;opacity:0;transition:opacity 1.6s ease;
+  background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(14,0,4,.62),rgba(14,0,4,.3) 60%,transparent 78%)}
+.show-text .heading::before{opacity:1}
 .heading{position:absolute;z-index:10;top:calc(calc(var(--vh,1vh) * 9) + 6px);left:0;right:0;text-align:center;padding:0 16px}
 
 /* ===== أنيميشن الكلام ===== */
@@ -72,9 +75,10 @@ body.locked{overflow:hidden;height:100vh;height:calc(var(--vh,1vh) * 100);touch-
 .split.play .ch{animation:chIn .9s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(var(--i) * var(--sp,35ms) + var(--d,0ms))}
 @keyframes chIn{60%{filter:blur(0);opacity:1}100%{opacity:1;transform:none;filter:blur(0)}}
 
-.write{position:relative;display:inline-block;-webkit-clip-path:inset(-20% 100% -20% -10%);clip-path:inset(-20% 100% -20% -10%);padding:0 .12em}
+.write{position:relative;display:inline-block;-webkit-clip-path:inset(-80% 100% -80% -40%);clip-path:inset(-80% 100% -80% -40%);padding:0 .12em}
 .write.play{animation:writeIn 1.8s cubic-bezier(.45,.05,.35,1) forwards, glowPulse 3.2s ease-in-out 2.2s infinite}
-@keyframes writeIn{to{-webkit-clip-path:inset(-20% -10% -20% -10%);clip-path:inset(-20% -10% -20% -10%)}}
+@keyframes writeIn{to{-webkit-clip-path:inset(-80% -40% -80% -40%);clip-path:inset(-80% -40% -80% -40%)}}
+.write.done{-webkit-clip-path:none!important;clip-path:none!important}
 @keyframes glowPulse{50%{text-shadow:0 0 14px rgba(255,255,255,.9),0 0 34px rgba(255,120,145,1),0 0 70px rgba(255,60,90,.8)}}
 .pen{position:absolute;top:50%;left:0;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;pointer-events:none;opacity:0;
   background:#fff;box-shadow:0 0 10px 4px #fff,0 0 26px 10px rgba(255,120,150,.9)}
@@ -93,7 +97,7 @@ body.locked{overflow:hidden;height:100vh;height:calc(var(--vh,1vh) * 100);touch-
 @keyframes tickA{0%{transform:translateY(-40%);opacity:0}100%{transform:none;opacity:1}}
 
 .small{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:clamp(17px,4.6vw,21px);color:#ffe1e6;opacity:.95}
-.name{font-family:"Great Vibes",cursive;font-weight:400;font-size:clamp(58px,17vw,92px);line-height:1;color:#fff;
+.name{font-family:"Great Vibes",cursive;font-weight:400;font-size:clamp(46px,min(17vw,calc(var(--vh,1vh) * 11)),92px);line-height:1;color:#fff;
   text-shadow:0 0 10px rgba(255,255,255,.7),0 0 26px rgba(255,120,145,.9),0 0 50px rgba(255,60,90,.6)}
 .amp{font-family:"Great Vibes",cursive;font-size:clamp(32px,9vw,44px);color:var(--gold);line-height:1;margin:2px 0;
   text-shadow:0 0 12px rgba(233,201,139,.8)}
@@ -163,6 +167,16 @@ body.locked{overflow:hidden;height:100vh;height:calc(var(--vh,1vh) * 100);touch-
 .verse{font-style:italic;font-size:19px}
 .verse-ref{display:block;margin-top:6px;font-family:"Cinzel",serif;font-size:12px;letter-spacing:2px;color:var(--gold);opacity:.85}
 .closing-sign{margin-top:6px}
+
+/* ===== ليالي الحنة (صغيرة وهادية) ===== */
+.henna.reveal{transition-delay:1.6s}
+.henna{margin:36px auto 0;width:100%;max-width:340px;padding:12px 16px 8px;border:1px solid rgba(233,201,139,.3);border-radius:14px;background:rgba(255,255,255,.025)}
+.henna-title{font-family:"Great Vibes",cursive;font-size:30px;color:var(--gold);line-height:1.3;margin-bottom:4px}
+.henna-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0;border-top:1px solid rgba(233,201,139,.14);text-align:start}
+.h-who{display:block;color:#fff;font-size:16px;line-height:1.4}
+.h-where{display:block;font-size:13px;color:rgba(255,215,222,.7);line-height:1.6}
+.h-when{flex:none;font-size:14px;color:var(--gold)}
+.h-loc{display:inline-block;margin-inline-start:4px;padding:0 8px;border-radius:20px;border:1px solid rgba(255,200,210,.45);color:#fff;text-decoration:none;font-size:12px;line-height:1.7}
 /* كل جزء صفحة كاملة لوحده */
 .stop{min-height:100vh;min-height:calc(var(--vh,1vh) * 100);display:flex;flex-direction:column;justify-content:center;padding:40px 0}
 .stop > .orn:first-child{margin-top:0}
@@ -361,7 +375,13 @@ footer{text-align:center;padding:30px 16px 36px;font-family:"Cinzel",serif;font-
       </div>
     </div></div>
 
-    <div class="stop"><p class="closing reveal split" data-sp="20" id="d-closing"></p><div class="closing-sign"><span class="name write" id="d-sign" style="font-size:44px"></span></div></div>
+    <div class="stop"><p class="closing reveal split" data-sp="20" id="d-closing"></p><div class="closing-sign"><span class="name write" id="d-sign" style="font-size:44px"></span></div>
+
+      <div class="henna reveal">
+        <div class="henna-title">Henna Nights</div>
+        <div class="henna-row"><div><span class="h-who">Bride’s Henna</span><span class="h-where">In front of the bride’s home</span></div><div class="h-when">Tue, 10 November</div></div>
+        <div class="henna-row"><div><span class="h-who">Groom’s Henna</span><span class="h-where">In front of the groom’s home <a class="h-loc" href="https://maps.app.goo.gl/uNjBALEv81xv4NcA9" target="_blank" rel="noopener">📍 Location</a></span></div><div class="h-when">Wed, 11 November</div></div>
+      </div></div>
 
     <figure class="stop portrait reveal">
       <div class="frame"><img id="d-photo" alt="Hisham & Bassant" decoding="async"></div>
@@ -458,10 +478,24 @@ document.querySelectorAll(".split").forEach(el=>{
   if(el.dataset.sp) el.style.setProperty("--sp",el.dataset.sp+"ms");
   if(el.dataset.d) el.style.setProperty("--d",el.dataset.d+"ms");
 });
-const play=el=>{el.classList.add("play");const pen=el.nextElementSibling;if(el.classList.contains("write")&&pen&&pen.classList.contains("pen"))pen.classList.add("play")};
+const play=el=>{if(el.classList.contains("write")&&!el.dataset.w){el.dataset.w=1;el.addEventListener("animationend",ev=>{if(ev.animationName==="writeIn")el.classList.add("done")})}el.classList.add("play");const pen=el.nextElementSibling;if(el.classList.contains("write")&&pen&&pen.classList.contains("pen"))pen.classList.add("play")};
+
+/* العروسين ياخدوا المساحة الفاضية تحت الكلام بس — مايدخلوش عليه في أي شاشة */
+function fitCouple(){
+  const c=document.querySelector(".couple"), h=document.querySelector(".heading");
+  c.style.width="";
+  const hr=h.getBoundingClientRect(), cr=c.getBoundingClientRect();
+  const avail=cr.bottom-(hr.bottom+14);
+  if(cr.height>avail) c.style.width=Math.max(70,avail*200/300)+"px";
+}
+fitCouple();
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitCouple);
+addEventListener("load",fitCouple);
+addEventListener("resize",()=>setTimeout(fitCouple,120));
 
 /* تسلسل الكلام على المسرح */
 function playHero(){
+  fitCouple();
   const seq=[["h-families",0],["h-groom",900],["h-amp",2500],["h-bride",3000],["h-invite",4700],["h-date",5900],["h-place",6700]];
   seq.forEach(([id,t])=>setTimeout(()=>play($(id)),t));
   const [lastId,lastT]=seq[seq.length-1];
